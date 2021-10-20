@@ -7,6 +7,7 @@ public:
     void rotateRight(int milis);
     void rotateLeft(int milis);
     void stop();
+    void incrementDistance();
     void setSpeed(char speed);
     int getSonarValue();
     int getInfraredSensorValue();
@@ -21,6 +22,7 @@ private:
     int leftBackwardWheelPin;
 
     static char leftWheelSpeed, rightWheelSpeed;
+    static int distance;
 
     void leftWheelForward(char speed);
     void leftWheelBackward(char speed);
