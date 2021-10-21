@@ -4,13 +4,13 @@ public:
     RobotProtocol();
     void moveForward(int distance);
     void moveBackward(int distance);
-    void rotateRight(int milis);
-    void rotateLeft(int milis);
+    void rotateRight(int angle);
+    void rotateLeft(int angle);
     void stop();
     void incrementDistance();
     void setSpeed(char speed);
-    int getSonarValue();
-    int getInfraredSensorValue();
+    void getSonarValue();
+    void getInfraredSensorValue();
 
 private:
     int rightSpeedWheelPin;
@@ -24,10 +24,10 @@ private:
     static char leftWheelSpeed, rightWheelSpeed;
     static int distance;
 
-    void leftWheelForward(char speed);
-    void leftWheelBackward(char speed);
+    void leftWheelForward();
+    void leftWheelBackward();
     void leftWheelStop();
-    void rightWheelForward(char speed);
-    void rightWheelBackward(char speed);
+    void rightWheelForward();
+    void rightWheelBackward();
     void rightWheelStop();
 }

@@ -24,3 +24,66 @@ RobotProtocol::RobotProtocol()
 
     attachInterrupt(digitalPinToInterrupt(rightBackwardWheelPin), incrementDistance, FALLING);
 }
+
+void RobotProtocol::leftWheelForward()
+{
+    analogWrite(leftSpeedWheelPin, leftWheelSpeed);
+    digitalWrite(leftForwardWheelPin, HIGH);
+    digitalWrite(leftBackwardWheelPin, LOW);
+}
+
+void RobotProtocol::leftWheelBackward()
+{
+    analogWrite(leftSpeedWheelPin, leftWheelSpeed);
+    digitalWrite(leftForwardWheelPin, LOW);
+    digitalWrite(leftBackwardWheelPin, HIGH);
+}
+
+void RobotProtocol::leftWheelStop()
+{
+    digitalWrite(leftSpeedWheelPin, LOW);
+}
+
+void RobotProtocol::rightWheelForward()
+{
+    analogWrite(rightSpeedWheelPin, rightWheelSpeed);
+    digitalWrite(rightForwardWheelPin, HIGH);
+    digitalWrite(rightBackwardWheelPin, LOW);
+}
+
+void RobotProtocol::rightWheelBackward()
+{
+    analogWrite(rightSpeedWheelPin, rightWheelSpeed);
+    digitalWrite(rightForwardWheelPin, LOW);
+    digitalWrite(rightBackwardWheelPin, HIGH);
+}
+
+void RobotProtocol::rightWheelStop()
+{
+    digitalWrite(rightSpeedWheelPin, LOW);
+}
+
+void RobotProtocol::moveForward(int distance)
+{
+    rightWheelForward();
+    leftWheelForward();
+
+    while ((this->distance) < distance)
+    {
+        //do nothing
+    }
+    stop();
+    this->distance = 0;
+}
+
+void RobotProtocol::moveBackward(int distance) {
+    rightWheelBackward();
+    leftWheelBackward();
+
+    while ((this->distance) < distance)
+    {
+        //do nothing
+    }
+    stop();
+    this->distance = 0;
+}
