@@ -87,3 +87,14 @@ void RobotProtocol::moveBackward(int distance) {
     stop();
     this->distance = 0;
 }
+
+void RobotProtocol::incrementDistance() {
+    (this -> distance)++;
+}
+
+void RobotProtocol::setSpeed(char speed) {
+    this->LSpeed = LSpeed;
+  this->RSpeed = RSpeed;
+  analogWrite(RMotorSpeedPin,RSpeed);  
+  analogWrite(LMotorSpeedPin,LSpeed);   
+}
