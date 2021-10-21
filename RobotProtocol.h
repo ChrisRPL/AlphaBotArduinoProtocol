@@ -21,6 +21,12 @@ private:
     int leftForwardWheelPin;
     int leftBackwardWheelPin;
 
+    int ultrasonicTriggerPin;
+    int ultrasonicReceiverPin;
+
+    int leftInfraredPin;
+    int rightInfraredPin;
+
     static char leftWheelSpeed, rightWheelSpeed;
     static int distance;
 

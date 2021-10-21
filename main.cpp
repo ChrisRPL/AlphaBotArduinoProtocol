@@ -1,12 +1,12 @@
 #include "RobotProtocol.h"
 
-RobotProtocol robot = RobotProtocol();
+RobotProtocol robot;
 char command;
 int commandArgument;
 
 void setup()
 {
-    // nothing to setup
+    robot = RobotProtocol();
 }
 
 void loop()
@@ -35,12 +35,12 @@ void loop()
                 robot.rotateLeft(commandArgument);
             break;
         case 'v':
-            robot.setSpeed(commandArgument);
-
-            if (commandArgument > 0)
+            if (commandArgument * robot.leftWheelSpeed < 0)
             {
-                /* code */
+                Serial.print("Please use speed value of the same sign as robot speed value\n\n");
             }
+            else
+                robot.setSpeed(commandArgument);
             break;
         case 's':
             robot.stop();
