@@ -76,7 +76,8 @@ void RobotProtocol::moveForward(int distance)
     this->distance = 0;
 }
 
-void RobotProtocol::moveBackward(int distance) {
+void RobotProtocol::moveBackward(int distance)
+{
     rightWheelBackward();
     leftWheelBackward();
 
@@ -88,13 +89,35 @@ void RobotProtocol::moveBackward(int distance) {
     this->distance = 0;
 }
 
-void RobotProtocol::incrementDistance() {
-    (this -> distance)++;
+void RobotProtocol::incrementDistance()
+{
+    (this->distance)++;
 }
 
-void RobotProtocol::setSpeed(char speed) {
-    this->LSpeed = LSpeed;
-  this->RSpeed = RSpeed;
-  analogWrite(RMotorSpeedPin,RSpeed);  
-  analogWrite(LMotorSpeedPin,LSpeed);   
+void RobotProtocol::setSpeed(char speed)
+{
+    this->leftWheelSpeed = speed;
+    this->rightWheelSpeed = speed;
+    analogWrite(rightSpeedWheelPin, rightWheelSpeed);
+    analogWrite(leftSpeedWheelPin, leftWheelSpeed);
+}
+
+void RobotProtocol::rotateLeft(int angle)
+{
+    int milis = angle / 45; // 1ms = 45 degrees
+
+    leftWheelBackward();
+    rightWheelForward();
+    delay(milis);
+    stop();
+}
+
+void RobotProtocol::rotateRight(int angle)
+{
+    int milis = angle / 45; // 1ms = 45 degrees
+
+    leftWheelForward();
+    rightWheelBackward();
+    delay(milis);
+    stop();
 }
