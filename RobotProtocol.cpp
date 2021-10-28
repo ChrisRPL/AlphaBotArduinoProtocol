@@ -1,7 +1,7 @@
 #include "RobotProtocol.h"
 
-char RobotProtocol::leftWheelSpeed = 255;
-char RobotProtocol::rightWheelSpeed = 255;
+int RobotProtocol::leftWheelSpeed = 255;
+int RobotProtocol::rightWheelSpeed = 255;
 int RobotProtocol::distance = 0;
 
 RobotProtocol::RobotProtocol()
@@ -10,7 +10,7 @@ RobotProtocol::RobotProtocol()
     this->rightForwardWheelPin = A3;
     this->rightBackwardWheelPin = A2;
 
-    this->leftSpeedWheelPin = 6;
+    this->leftSpeedWheelPin = 5;
     this->leftForwardWheelPin = A0;
     this->leftBackwardWheelPin = A1;
 
@@ -34,7 +34,7 @@ RobotProtocol::RobotProtocol()
     pinMode(leftInfraredPin, INPUT);
     pinMode(rightInfraredPin, INPUT);
 
-    attachInterrupt(digitalPinToInterrupt(rightBackwardWheelPin), incrementDistance, FALLING);
+    attachInterrupt(digitalPinToInterrupt(3), incrementDistance, FALLING);
 }
 
 void RobotProtocol::leftWheelForward()
@@ -82,7 +82,7 @@ void RobotProtocol::moveForward(int distance)
 
     while ((this->distance) < distance)
     {
-        //do nothing
+        Serial.print(" ");
     }
     stop();
     this->distance = 0;
@@ -92,10 +92,12 @@ void RobotProtocol::moveBackward(int distance)
 {
     rightWheelBackward();
     leftWheelBackward();
+	
+	distance *=-1;
 
     while ((this->distance) < distance)
     {
-        //do nothing
+        Serial.print(" ");
     }
     stop();
     this->distance = 0;
@@ -103,7 +105,7 @@ void RobotProtocol::moveBackward(int distance)
 
 void RobotProtocol::incrementDistance()
 {
-    (this->distance)++;
+    (RobotProtocol::distance)++;
 }
 
 void RobotProtocol::setSpeed(char speed)
@@ -130,7 +132,7 @@ void RobotProtocol::rotateRight(int angle)
 
     leftWheelForward();
     rightWheelBackward();
-    delay(milis);
+    delay(500);
     stop();
 }
 
@@ -142,7 +144,7 @@ void RobotProtocol::getSonarValue()
     delayMicroseconds(10); //high level signal to control the pin TRIG to trigger distance measurement
     digitalWrite(ultrasonicTriggerPin, LOW);
     float signalTime = pulseIn(ultrasonicReceiverPin, HIGH);
-    float distance = (signalTime * 340) / 2; //(signal_time * speed_of_sound) / 2
+    float distance = (signalTime) / 58; //(signal_time * speed_of_sound) / 2
 
     Serial.print("Distance:"); //print distance
     Serial.print(distance);
@@ -161,4 +163,9 @@ void RobotProtocol::getInfraredSensorValue()
     Serial.print("Right pin distance:"); //print distance
     Serial.print(rightInfraredPin);
     Serial.print("cm\n\n");
+}
+
+void RobotProtocol::stop(){
+	leftWheelStop();
+	rightWheelStop();
 }

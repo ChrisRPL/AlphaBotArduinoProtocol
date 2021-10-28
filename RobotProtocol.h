@@ -1,16 +1,21 @@
+#include "Arduino.h"
 class RobotProtocol
 {
 public:
-    RobotProtocol();
-    void moveForward(int distance);
-    void moveBackward(int distance);
-    void rotateRight(int angle);
-    void rotateLeft(int angle);
-    void stop();
-    void incrementDistance();
-    void setSpeed(char speed);
-    void getSonarValue();
-    void getInfraredSensorValue();
+RobotProtocol();
+void moveForward(int distance);
+void moveBackward(int distance);
+void rotateRight(int angle);
+void rotateLeft(int angle);
+void stop();
+static void incrementDistance();
+void setSpeed(char speed);
+void getSonarValue();
+void getInfraredSensorValue();
+	
+static int leftWheelSpeed, rightWheelSpeed;
+
+static int distance;
 
 private:
     int rightSpeedWheelPin;
@@ -27,8 +32,7 @@ private:
     int leftInfraredPin;
     int rightInfraredPin;
 
-    static char leftWheelSpeed, rightWheelSpeed;
-    static int distance;
+    
 
     void leftWheelForward();
     void leftWheelBackward();
@@ -36,4 +40,4 @@ private:
     void rightWheelForward();
     void rightWheelBackward();
     void rightWheelStop();
-}
+};
