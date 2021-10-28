@@ -12,6 +12,7 @@ static void incrementDistance();
 void setSpeed(char speed);
 void getSonarValue();
 void getInfraredSensorValue();
+void executeCommand();
 	
 static int leftWheelSpeed, rightWheelSpeed;
 

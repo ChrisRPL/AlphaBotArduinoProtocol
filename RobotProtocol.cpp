@@ -17,8 +17,8 @@ RobotProtocol::RobotProtocol()
     this->ultrasonicReceiverPin = 12;
     this->ultrasonicTriggerPin = 11;
 
-    this -> leftInfraredPin = 7;
-    this -> rightInfraredPin = 8;
+    this->leftInfraredPin = 7;
+    this->rightInfraredPin = 8;
 
     pinMode(leftSpeedWheelPin, OUTPUT);
     pinMode(leftForwardWheelPin, OUTPUT);
@@ -82,7 +82,7 @@ void RobotProtocol::moveForward(int distance)
 
     while ((this->distance) < distance)
     {
-        Serial.print(" ");
+        executeCommand();
     }
     stop();
     this->distance = 0;
@@ -92,12 +92,12 @@ void RobotProtocol::moveBackward(int distance)
 {
     rightWheelBackward();
     leftWheelBackward();
-	
-	distance *=-1;
+
+    distance *= -1;
 
     while ((this->distance) < distance)
     {
-        Serial.print(" ");
+        executeCommand();
     }
     stop();
     this->distance = 0;
@@ -165,7 +165,59 @@ void RobotProtocol::getInfraredSensorValue()
     Serial.print("cm\n\n");
 }
 
-void RobotProtocol::stop(){
-	leftWheelStop();
-	rightWheelStop();
+void RobotProtocol::stop()
+{
+    leftWheelStop();
+    rightWheelStop();
+}
+
+void RobotProtocol::executeCommand()
+{
+    char command;
+    int commandArgument;
+
+    if (Serial.available() > 0)
+    {
+        command = Serial.peek();
+        commandArgument = Serial.parseInt();
+
+        switch (command)
+        {
+        case 'm':
+            if (commandArgument > 0)
+            {
+                moveForward(commandArgument);
+            }
+            else
+                moveBackward(commandArgument);
+            break;
+        case 'r':
+            if (commandArgument > 0)
+            {
+                rotateRight(commandArgument);
+            }
+            else
+                rotateLeft(commandArgument);
+            break;
+        case 'v':
+            if (commandArgument * leftWheelSpeed < 0)
+            {
+                Serial.print("Please use speed value of the same sign as robot speed value\n\n");
+            }
+            else
+                setSpeed(commandArgument);
+            break;
+        case 's':
+            stop();
+            break;
+        case 'b':
+            getSonarValue();
+            break;
+        case 'i':
+            getInfraredSensorValue();
+            break;
+        default:
+            break;
+        }
+    }
 }
